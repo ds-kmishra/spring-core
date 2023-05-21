@@ -7,6 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
+import pd.example.annotation.SMSService;
 import pd.example.config.AppConfig;
 import pd.example.service.EmailService;
 
@@ -47,10 +48,18 @@ public class App
         // I- Create a package called config
         // II- and a AppConfig Class having annotation
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        /*ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         EmailService emailService = applicationContext.getBean("emailService", EmailService.class);
         emailService.sendEmail("test@gmail.com", "Hello from Miss Xing!");
-        System.out.println(emailService);
+        System.out.println(emailService);*/
+
+        // -- For AppConfig.class
+        // ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        // -- For spring-annotations.xml - component scan
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-annotation.xml");
+        SMSService emailService = context.getBean("smsService", SMSService.class);
+        emailService.sendMessage("Tina@gmail.com", "Hi...");
+
     }
 }
 
